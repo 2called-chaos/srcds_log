@@ -1,3 +1,5 @@
+app.feed(:silent, desc: "don't show anything") { false }
+
 app.feed(:hidden, desc: "include hidden") { $rec.hidden? }
 app.feed(:visible, desc: "exclude hidden") { !$rec.hidden? || app.opts[:show_hidden] }
 
