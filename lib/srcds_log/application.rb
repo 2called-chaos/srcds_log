@@ -86,16 +86,18 @@ module SrcdsLog
       end
       exit 0
     ensure
-      finalizer_to_run = @finalizer[:__everytime].dup
-      @finalizer.each {|n,f| finalizer_to_run += f if @opts[:feeds] && @opts[:feeds][n.to_s] }
+      if @opts[:dispatch] == :loop
+        finalizer_to_run = @finalizer[:__everytime].dup
+        @finalizer.each {|n,f| finalizer_to_run += f if @opts[:feeds] && @opts[:feeds][n.to_s] }
 
-      finalizer_to_run.each do |f|
-        begin
-          f.call(self)
-        rescue
-          puts "#{$@[0]}: #{$!.message} (#{$!.class})"
-          $@[1..-1].each{|m| puts "\tfrom #{m}" }
-          puts nil, "  -------------", nil, "  !> #{$!.message} (#{$!.class})", nil
+        finalizer_to_run.each do |f|
+          begin
+            f.call(self)
+          rescue
+            puts "#{$@[0]}: #{$!.message} (#{$!.class})"
+            $@[1..-1].each{|m| puts "\tfrom #{m}" }
+            puts nil, "  -------------", nil, "  !> #{$!.message} (#{$!.class})", nil
+          end
         end
       end
     end
