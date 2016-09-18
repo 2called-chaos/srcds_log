@@ -406,6 +406,10 @@ module SrcdsLog
           if @attributes[:message].include?("connected, address")
             @data_color = :green
             @categories.unshift(:p_state, :p_connected)
+            if @time
+              $player_connected_mem ||= {}
+              $player_connected_mem[m[1]] = @time
+            end
           end
           @categories.unshift(:p_state, :p_entered_game) if @attributes[:message] == "entered the game"
 
@@ -426,6 +430,10 @@ module SrcdsLog
             @categories.unshift(:p_state, :p_disconnected)
             @attributes[:reason] = m2[1]
             @data_color = :red
+            if @time && $player_connected_mem && pc = $player_connected_mem[m[1]]
+              @data["disconnected"] = "disconnected after #{human_seconds @time - pc}"
+              $player_connected_mem.delete(m[1])
+            end
           end
           return @classified = true
         end
