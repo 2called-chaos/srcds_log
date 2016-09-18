@@ -1,7 +1,7 @@
 # users by playtime
 users_pt = {}
 users_m = {}
-app.feed :users_by_playtime do
+app.feed :users_by_playtime, desc: "List all players sorted by playtime high2low" do
   # throw :next if $rec.attr(:bot)
   player = "#{"[BOT] " if $rec.attr(:bot)}#{$rec.attr(:player)}"
   throw :next unless $rec.time
@@ -19,6 +19,7 @@ app.feed :users_by_playtime do
   false # don't draw anything just our stuff (finalizer)
 end
 app.finalize(:users_by_playtime) do
+  max_length = [35, users_pt.keys.map(&:length).max].min
   sorted = users_pt.sort_by{|name, (connects, playtime)| playtime}.reverse
-  puts sorted.map{|name, (connects, playtime)| "#{name} "[0..35].rjust(35, " ") << app.human_seconds(playtime).ljust(20, " ") << " in #{connects} sessions" }
+  puts sorted.map{|name, (connects, playtime)| "#{name}"[0..max_length].rjust(max_length, " ") << app.human_seconds(playtime).ljust(20, " ") << " in #{connects} sessions" }
 end

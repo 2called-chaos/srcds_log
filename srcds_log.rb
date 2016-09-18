@@ -22,7 +22,7 @@ begin
     # Feeds are passed via -f or --feeds option (ordered)
     # If the block returns a truthy value it will be drawn.
     # You can organize your feeds in the ./feeds directory!
-    app.feed :my_feed do
+    app.feed :my_feed, desc: "My personal config" do
       # skip hidden messages (boring stuff is hidden)
       # (don't return or break cause it will fuck up, use throw instead)
       throw :next if $rec.hidden?

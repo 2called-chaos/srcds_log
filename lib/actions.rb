@@ -29,9 +29,11 @@ module SrcdsLog
     def dispatch_list_feeds &filter
       init_feeds!(&filter)
       puts c("Listing available feeds:")
-      @feeds.keys.sort.each do |n|
+      feed_list = @feeds.keys.sort
+      fl_max = feed_list.map(&:length).max
+      feed_list.each do |n|
         next if n == :__default
-        puts c("  #{n.to_s.rjust(60, " ")}", :blue) << c(" #{@feeds_desc[n]}")
+        puts c("  #{n.to_s.rjust([60, fl_max].min, " ")}", :blue) << c(" #{@feeds_desc[n]}")
       end
     end
 
