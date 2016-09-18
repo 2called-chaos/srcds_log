@@ -91,7 +91,6 @@ module SrcdsLog
 
       %w[
         random_shit
-        metamod
         gungame
         mapchange
         mapvote
@@ -99,6 +98,7 @@ module SrcdsLog
         server_config
         player_actions
         bullshit_cvars
+        metamod
       ].detect {|m| __send__(:"classify_#{m}") ; classified? }
     end
   end
