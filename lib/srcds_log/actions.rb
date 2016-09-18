@@ -1,21 +1,13 @@
 module SrcdsLog
   module Actions
     def dispatch_update
-      print_version
-      uri = URI.parse(UPDATE_URL)
-      res = Net::HTTP.get_response(uri)
-
-      if res.is_a?(Net::HTTPSuccess)
-        File.open("#{__FILE__}.update", "w") {|f| f << res.body }
-        FileUtils.mv("#{__FILE__}.update", __FILE__)
-        FileUtils.chmod "+x", __FILE__
-        puts `#{__FILE__} -v`.strip
+      dispatch_version
+      if res = system(%{cd "#{APP_ROOT}" && git pull})
+        puts c("Updated?!", :green)
       else
-        puts "Update failed! Got #{res}"
+        puts c("Automatic update failed! Run `git pull' manually.", :red)
         exit 1
       end
-
-      puts "Updated?!"
     end
 
     def dispatch_version
