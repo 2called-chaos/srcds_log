@@ -21,5 +21,5 @@ end
 app.finalize(:users_by_playtime) do
   max_length = [35, users_pt.keys.map(&:length).max].min
   sorted = users_pt.sort_by{|name, (connects, playtime)| playtime}.reverse
-  puts sorted.map{|name, (connects, playtime)| "#{name}"[0..max_length].rjust(max_length, " ") << app.human_seconds(playtime).ljust(20, " ") << " in #{connects} sessions" }
+  puts sorted.map{|name, (connects, playtime)| "#{name}"[0..max_length].rjust(max_length, " ") << "  " << app.human_seconds(playtime).ljust(20, " ") << " in #{connects} sessions" }
 end
