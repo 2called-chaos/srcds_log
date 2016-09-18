@@ -1,6 +1,7 @@
 module SrcdsLog
   class FeedEval
-    def initialize feeds, str
+    def initialize app, feeds, str
+      @app = app
       @feeds = feeds
       @str = str
 

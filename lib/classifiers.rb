@@ -378,6 +378,7 @@ module SrcdsLog
           @attributes[:weapon] = m[15]
           @attributes[:headshot] = m[16] && m[16]["headshot"]
           @attributes[:wallbang] = m[16] && m[16]["penetrated"]
+          @attributes[:bot] = m[3] == "BOT" && m[10] == "BOT"
           @attributes[:killer] = m[1]
           @attributes[:killer_level] = m[2]
           @attributes[:killer_bot] = m[3] == "BOT"

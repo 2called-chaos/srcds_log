@@ -33,6 +33,15 @@ module SrcdsLog
       end
     end
 
+    def attr a
+      attributes[a]
+    end
+
+    def category? category
+      categories.include?(category)
+    end
+    alias_method :cat?, :category?
+
     def category_color cat, debug = false
       return :black if hidden?
       cmap = {
