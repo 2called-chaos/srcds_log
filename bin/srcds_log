@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-APP_ROOT = File.expand_path("#{File.dirname(File.readlink(__FILE__))}/..")
+fl = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+APP_ROOT = File.expand_path("#{File.dirname(fl)}/..")
 require "#{APP_ROOT}/lib/srcds_log"
 STDOUT.sync = true
 
