@@ -42,13 +42,13 @@ module SrcdsLog
     end
     alias_method :cat?, :category?
 
-    def category_all? *categories
-      categories.flatten.all?{|c| categories.include?(c) }
+    def category_all? *cat_list
+      cat_list.flatten.all?{|c| categories.include?(c) }
     end
     alias_method :cat_all?, :category_all?
 
-    def category_any? *categories
-      categories.flatten.any?{|c| categories.include?(c) }
+    def category_any? *cat_list
+      cat_list.flatten.any?{|c| categories.include?(c) }
     end
     alias_method :cat_any?, :category_any?
 
