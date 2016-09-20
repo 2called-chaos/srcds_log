@@ -42,6 +42,16 @@ module SrcdsLog
     end
     alias_method :cat?, :category?
 
+    def category_all? *categories
+      categories.flatten.all?{|c| categories.include?(c) }
+    end
+    alias_method :cat_all?, :category_all?
+
+    def category_any? *categories
+      categories.flatten.any?{|c| categories.include?(c) }
+    end
+    alias_method :cat_any?, :category_any?
+
     def category_color cat, debug = false
       return :black if hidden?
       cmap = {

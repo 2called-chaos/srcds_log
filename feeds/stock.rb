@@ -14,5 +14,11 @@ app.feed(:bot, desc: "include bot only") { $rec.attributes[:bot] }
 app.feed(:nobot, desc: "exclude bot only") { !$rec.attributes[:bot] }
 
 app.feed(:interesting, desc: "author recommended") do
-  !$rec.classified? || ($rec.cat?(:killfeed) && !$rec.bot) || app.feeds[:jl].call
+  bot = $rec.attr(:bot)
+  [
+    !$rec.classified?,
+    $rec.cat?(:killfeed) && !bot,
+    $rec.cat_any?(:mapvote, :s_clevel),
+    !bot && app.feeds[:jl].call,
+  ].any?{|v| v}
 end
